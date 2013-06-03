@@ -3,7 +3,6 @@
  * The template for displaying 404 pages (Not Found).
  *
  * @package _s
- * @since _s 1.0
  */
 
 get_header(); ?>
@@ -11,7 +10,7 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
 
-			<article id="post-0" class="post error404 not-found">
+			<article id="post-0" class="post not-found">
 				<header class="entry-header">
 					<h1 class="entry-title"><?php _e( 'Oops! That page can&rsquo;t be found.', '_s' ); ?></h1>
 				</header><!-- .entry-header -->
@@ -23,12 +22,22 @@ get_header(); ?>
 
 					<?php the_widget( 'WP_Widget_Recent_Posts' ); ?>
 
-					<div class="widget">
+					<?php if ( _s_categorized_blog() ) : // Only show the widget if site has multiple categories. ?>
+					<div class="widget widget_categories">
 						<h2 class="widgettitle"><?php _e( 'Most Used Categories', '_s' ); ?></h2>
 						<ul>
-						<?php wp_list_categories( array( 'orderby' => 'count', 'order' => 'DESC', 'show_count' => 1, 'title_li' => '', 'number' => 10 ) ); ?>
+						<?php
+							wp_list_categories( array(
+								'orderby'    => 'count',
+								'order'      => 'DESC',
+								'show_count' => 1,
+								'title_li'   => '',
+								'number'     => 10,
+							) );
+						?>
 						</ul>
 					</div><!-- .widget -->
+					<?php endif; ?>
 
 					<?php
 					/* translators: %1$s: smiley */
@@ -39,9 +48,9 @@ get_header(); ?>
 					<?php the_widget( 'WP_Widget_Tag_Cloud' ); ?>
 
 				</div><!-- .entry-content -->
-			</article><!-- #post-0 .post .error404 .not-found -->
+			</article><!-- #post-0 .post .not-found -->
 
-		</div><!-- #content .site-content -->
-	</div><!-- #primary .content-area -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
 
 <?php get_footer(); ?>
